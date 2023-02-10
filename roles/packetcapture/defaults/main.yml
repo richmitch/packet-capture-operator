@@ -1,2 +1,5 @@
 ---
 # defaults file for PacketCapture
+
+state: present
+packetCaptureNamespace: packet-capture
