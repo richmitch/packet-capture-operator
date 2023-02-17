@@ -32,10 +32,10 @@ spec:
           spec:
             description: Spec defines the desired state of PacketCapture
             properties:
-              namespace:
+              targetNamespace:
                 description: Namespace containing the Deployment that maintains the pods to be monitored
                 type: string
-              deployment:
+              targetDeployment:
                 description: Deployment that maintains the pods to be monitored
                 type: string
               duration:

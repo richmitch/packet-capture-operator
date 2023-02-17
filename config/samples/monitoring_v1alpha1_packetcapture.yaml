@@ -9,6 +9,6 @@ metadata:
     app.kubernetes.io/created-by: packet-capture-operator
   name: packetcapture-sample
 spec:
-  namespace: fred
-  deployment: barney
+  targetNamespace: fred
+  targetDeployment: barney
   duration: "30"
