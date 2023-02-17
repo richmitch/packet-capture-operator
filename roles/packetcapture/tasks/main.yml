@@ -1,16 +1,16 @@
 ---
 # tasks file for PacketCapture
-- name: set ConfigMap pcap-{{ namespace }}-{{ deployment }} to {{ state }}
+- name: set ConfigMap pcap-{{ targetNamespace }}-{{ targetDeployment }} to {{ state }}
   kubernetes.core.k8s:
     definition:
       api_version: v1
       kind: ConfigMap
       metadata:
-        name: "pcapt-{{ namespace }}-{{ deployment }}"
+        name: "pcapt-{{ targetNamespace }}-{{ targetDeployment }}"
         namespace: "{{ packetCaptureNamespace }}"
       data:
-        namespace: "{{ namespace }}"
-        deployment: "{{ deployment }}"
+        namespace: "{{ targetNamespace }}"
+        deployment: "{{ targetDeployment }}"
         duration: "{{ duration }}"
     state: "{{ state }}"
   ignore_errors: true

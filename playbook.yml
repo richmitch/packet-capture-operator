@@ -1,8 +1,8 @@
 ---
 - hosts: localhost
   vars:
-    namespace: Fred
-    deployment: Barney
+    targetNamespace: Fred
+    targetDeployment: Barney
     duration: 30
   roles:
     - packetcapture
