@@ -3,12 +3,12 @@ kind: PacketCapture
 metadata:
   labels:
     app.kubernetes.io/name: packetcapture
-    app.kubernetes.io/instance: packetcapture-sample
+    app.kubernetes.io/instance: packetcapture-sample-fred-barney
     app.kubernetes.io/part-of: packet-capture-operator
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: packet-capture-operator
   name: packetcapture-sample
 spec:
-  namespace: Fred
-  deployment: Barney
-  duration: 30
+  namespace: fred
+  deployment: barney
+  duration: "30"

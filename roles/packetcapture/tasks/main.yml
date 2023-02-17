@@ -6,6 +6,12 @@
       api_version: v1
       kind: ConfigMap
       metadata:
+        labels:
+          app.kubernetes.io/name: packetcapture
+          app.kubernetes.io/instance: packetcapture-sample-{{ targetNamespace }}-{{ targetDeployment }}
+          app.kubernetes.io/part-of: packet-capture-operator
+          app.kubernetes.io/managed-by: kustomize
+          app.kubernetes.io/created-by: packet-capture-operator
         name: "pcapt-{{ targetNamespace }}-{{ targetDeployment }}"
         namespace: "{{ packetCaptureNamespace }}"
       data:

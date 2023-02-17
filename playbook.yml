@@ -3,6 +3,6 @@
   vars:
     targetNamespace: Fred
     targetDeployment: Barney
-    duration: 30
+    duration: "30"
   roles:
     - packetcapture
