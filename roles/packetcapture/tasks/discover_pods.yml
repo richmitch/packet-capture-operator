@@ -10,7 +10,3 @@
   when: "item.metadata.name.startswith('{{ targetDeployment }}')"
   loop_control:
     label: "{{ item.metadata.name }}"
-
-- name: "Show our new list of Pods and Nodes from Deployment {{ targetDeployment }}"
-  ansible.builtin.debug:
-    var: pods
