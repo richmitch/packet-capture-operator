@@ -43,7 +43,7 @@ spec:
                 type: string
               duration:
                 description: Duration in seconds for the packet capture to run for
-                type: int64
+                type: string
             type: object
             x-kubernetes-preserve-unknown-fields: true
           status:

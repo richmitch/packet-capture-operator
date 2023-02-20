@@ -3,14 +3,14 @@ kind: PacketCapture
 metadata:
   labels:
     app.kubernetes.io/name: packet-capture
-    app.kubernetes.io/instance: packet-capture-openshift-nfd-nfd-controller-manager
+    app.kubernetes.io/instance: packet-capture-openshift-gitops-openshift-gitops-server
     app.kubernetes.io/part-of: packet-capture-operator
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: packet-capture-operator
-  name: packet-capture-openshift-nfd-nfd-controller-manager
+  name: packet-capture-openshift-gitops-openshift-gitops-server
   namespace: packet-capture
 spec:
-  jobId: "{{ lookup('community.general.random_string', length=4, numbers=false, special=false, upper=false) }}"
+  jobId: qwer
   targetNamespace: openshift-gitops
   targetDeployment: openshift-gitops-server
   duration: "30"
