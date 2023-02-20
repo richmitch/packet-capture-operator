@@ -1,40 +1,10 @@
 ---
 # tasks file for PacketCapture
-- name: "Create ConfigMap packet-capture-{{ targetNamespace }}-{{ targetDeployment }}"
-  kubernetes.core.k8s:
-    definition:
-      api_version: v1
-      kind: ConfigMap
-      metadata:
-        annotations:
-          "ansible.sdk.operatorframework.io/verbosity": "4"
-        labels:
-          app.kubernetes.io/name: packet-capture
-          app.kubernetes.io/instance: "packet-capture-{{ targetNamespace }}-{{ targetDeployment }}"
-          app.kubernetes.io/part-of: packet-capture-operator
-          app.kubernetes.io/managed-by: kustomize
-          app.kubernetes.io/created-by: packet-capture-operator
-        name: "packet-capture-{{ targetNamespace }}-{{ targetDeployment }}"
-        namespace: "{{ packetCaptureNamespace }}"
-      data:
-        namespace: "{{ targetNamespace }}"
-        deployment: "{{ targetDeployment }}"
-        duration: "{{ duration }}"
-    state: "{{ state }}"
-  ignore_errors: true
-
-- name: "Fetch all Pods in a Namespace {{ targetNamespace }}"
-  set_fact:
-    deployments: "{{ query('kubernetes.core.k8s', kind='Pod', namespace=targetNamespace) }}"
-
-- name: "Filter dict of Pods and their Nodes for Deployment {{ targetDeployment }}"
-  set_fact:
-    pods: "{{ pods | default({}) | combine({ 'name' : item.metadata.name, 'node' : item.spec.nodeName}) }}"
-  loop: "{{ deployments }}"
-  when: "item.metadata.name.startswith('{{ targetDeployment }}')"
+- name: Configure PacketCapture
+  ansible.builtin.include_tasks: "{{ tasks }}"
+  loop:
+    - create_configmap.yml
+    - discover_pods.yml
+    - create_jobs.yml
   loop_control:
-    label: "{{ item.metadata.name }}"
-
-- name: "Show our new dict of Pods and Nodes from Deployment {{ targetDeployment }}"
-  ansible.builtin.debug:
-    var: pods
+    loop_var: tasks

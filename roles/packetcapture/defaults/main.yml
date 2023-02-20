@@ -3,3 +3,8 @@
 
 state: present
 packetCaptureNamespace: packet-capture
+
+restartPolicy: OnFailure
+backoffLimit: 5
+
+pods: [] 

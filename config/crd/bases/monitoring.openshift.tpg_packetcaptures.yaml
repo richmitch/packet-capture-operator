@@ -32,6 +32,9 @@ spec:
           spec:
             description: Spec defines the desired state of PacketCapture
             properties:
+              jobId:
+                description: Unique id of the Packet Capture job
+                type: string
               targetNamespace:
                 description: Namespace containing the Deployment that maintains the pods to be monitored
                 type: string
@@ -39,8 +42,8 @@ spec:
                 description: Deployment that maintains the pods to be monitored
                 type: string
               duration:
-                description: Duration in minutes for the packet capture to run for
-                type: string
+                description: Duration in seconds for the packet capture to run for
+                type: int64
             type: object
             x-kubernetes-preserve-unknown-fields: true
           status:

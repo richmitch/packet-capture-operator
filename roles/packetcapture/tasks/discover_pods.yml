@@ -1,0 +1,16 @@
+---
+- name: "Fetch all Pods in a Namespace {{ targetNamespace }}"
+  set_fact:
+    deployments: "{{ query('kubernetes.core.k8s', kind='Pod', namespace=targetNamespace) }}"
+
+- name: "Filter list of Pods and their Nodes for Deployment {{ targetDeployment }}"
+  set_fact:
+    pods: "{{ pods + [{ 'name' : item.metadata.name, 'node' : item.spec.nodeName}] }}"
+  loop: "{{ deployments }}"
+  when: "item.metadata.name.startswith('{{ targetDeployment }}')"
+  loop_control:
+    label: "{{ item.metadata.name }}"
+
+- name: "Show our new list of Pods and Nodes from Deployment {{ targetDeployment }}"
+  ansible.builtin.debug:
+    var: pods

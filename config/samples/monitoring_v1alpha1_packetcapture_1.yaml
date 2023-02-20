@@ -10,6 +10,7 @@ metadata:
   name: packet-capture-openshift-nfd-nfd-controller-manager
   namespace: packet-capture
 spec:
+  jobId: "{{ lookup('community.general.random_string', length=4, numbers=false, special=false, upper=false) }}"
   targetNamespace: openshift-gitops
   targetDeployment: openshift-gitops-server
   duration: "30"

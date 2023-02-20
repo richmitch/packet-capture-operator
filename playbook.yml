@@ -6,6 +6,7 @@
     - kubernetes.core
     - ioperator_sdk.util
   vars:
+    jobId: "{{ lookup('community.general.random_string', length=4, numbers=false, special=false, upper=false) }}"
     targetNamespace: openshift-gitops
     targetDeployment: openshift-gitops-server
     duration: "30"

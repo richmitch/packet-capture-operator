@@ -1,0 +1,35 @@
+---
+- name: "Create Jobs"
+  kubernetes.core.k8s:
+    definition:
+      api_version: batch/v1
+      kind: Job
+      metadata:
+        annotations:
+          "ansible.sdk.operatorframework.io/verbosity": "4"
+        labels:
+          app.kubernetes.io/name: packet-capture
+          app.kubernetes.io/instance: "{{ pod.name }}-{{ jobId }}"
+          app.kubernetes.io/part-of: packet-capture-operator
+          app.kubernetes.io/managed-by: kustomize
+          app.kubernetes.io/created-by: packet-capture-operator
+        name: "{{ pod.name }}-{{ jobId }}"
+        namespace: "{{ packetCaptureNamespace }}"
+      spec:
+        template:
+          spec:
+            containers:
+            - name: pi
+              image: perl:5.34.0
+              command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+#            activeDeadlineSeconds: "{{ duration | int }}"
+            restartPolicy: "{{ restartPolicy }}"
+            nodeSelector:
+              kubernetes.io/hostname: "{{ pod.node }}"
+        backoffLimit: "{{ backoffLimit }}"
+    state: "{{ state }}"
+  loop: "{{ pods }}"
+  loop_control:
+    loop_var: pod
+    label: "Job: {{ pod.name }}-{{ jobId }}"
+  ignore_errors: true
