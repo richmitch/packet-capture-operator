@@ -5,3 +5,4 @@
   kind: PacketCapture
   role: packetcapture
 #+kubebuilder:scaffold:watch
+  snakeCaseParameters: false

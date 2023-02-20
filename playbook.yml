@@ -1,8 +1,13 @@
 ---
 - hosts: localhost
+  collections:
+    - cloud.common
+    - community.kubernetes
+    - kubernetes.core
+    - ioperator_sdk.util
   vars:
-    targetNamespace: Fred
-    targetDeployment: Barney
+    targetNamespace: openshift-gitops
+    targetDeployment: openshift-gitops-server
     duration: "30"
   roles:
     - packetcapture

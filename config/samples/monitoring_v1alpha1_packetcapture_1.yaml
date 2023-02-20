@@ -1,0 +1,15 @@
+apiVersion: monitoring.openshift.tpg/v1alpha1
+kind: PacketCapture
+metadata:
+  labels:
+    app.kubernetes.io/name: packet-capture
+    app.kubernetes.io/instance: packet-capture-openshift-nfd-nfd-controller-manager
+    app.kubernetes.io/part-of: packet-capture-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: packet-capture-operator
+  name: packet-capture-openshift-nfd-nfd-controller-manager
+  namespace: packet-capture
+spec:
+  targetNamespace: openshift-gitops
+  targetDeployment: openshift-gitops-server
+  duration: "30"
