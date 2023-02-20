@@ -7,4 +7,6 @@ packetCaptureNamespace: packet-capture
 restartPolicy: OnFailure
 backoffLimit: 5
 
+# List of pod names and the nodes they are deployed to
+# The list is used in create_jobs
 pods: [] 
