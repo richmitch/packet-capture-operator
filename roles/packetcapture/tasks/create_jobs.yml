@@ -20,10 +20,18 @@
           activeDeadlineSeconds: "{{ duration | int }}"
           backoffLimit: "{{ backoffLimit }}"
           spec:
+            volumes:
+              - name: tcpdump-script
+                configMap:
+                  name: "{{ targetNamespace }}-{{ targetDeployment }}"
+                  defaultMode: 0777
             containers:
-            - name: pi
-              image: perl:5.34.0
-              command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+            - name: tcpdump
+              image: registry.redhat.io/rhel8/support-tools
+              command: ["/bin/bash",  "/tmp/config/script.sh"]
+              volumeMounts:
+                - mountPath: /tmp/config
+                  name: tcpdump-script
             restartPolicy: "{{ restartPolicy }}"
             nodeSelector:
               kubernetes.io/hostname: "{{ pod.node }}"

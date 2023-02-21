@@ -41,6 +41,9 @@ spec:
               targetDeployment:
                 description: Deployment that maintains the pods to be monitored
                 type: string
+              port:
+                description: The port to monitor
+                type: string              
               duration:
                 description: Duration in seconds for the packet capture to run for
                 type: string

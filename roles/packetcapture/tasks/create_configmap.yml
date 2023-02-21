@@ -19,5 +19,15 @@
         namespace: "{{ targetNamespace }}"
         deployment: "{{ targetDeployment }}"
         duration: "{{ duration }}"
+        port: "{{ port }}"
+        script.sh: |
+          NAME=${POD_NAME}
+          NAMESPACE={{ targetNamespace }}
+          POD_ID=$(chroot /host crictl pods --namespace ${NAMESPACE} --name ${NAME} -q)
+          NS_PATH="/host/$(chroot /host bash -c "crictl inspectp $POD_ID | jq '.info.runtimeSpec.linux.namespaces[]|select(.type==\"network\").path' -r")"
+          NSENTER_PARAMETERS="--net=${NS_PATH}"
+          INTERFACE={{ interface | default(tcpdump.interface) }}
+          TCPDUMP_EXTRA_PARAMS="-G {{ tcpdump.duration }}"
+          nsenter $nsenter_parameters -- tcpdump -nn -i ${INTERFACE} -w {{ tcpdump.filepath }}/{{ targetNamespace }}/{{ targetDeployment }}/${POD_NAME}_$(date +\%d_%m_%Y-%H_%M_%S-%Z).pcap ${TCPDUMP_EXTRA_PARAMS}
     state: "{{ state }}"
   ignore_errors: true

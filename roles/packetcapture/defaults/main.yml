@@ -4,6 +4,13 @@
 state: present
 packetCaptureNamespace: packet-capture
 
+tcpdump:
+  interface: eth0
+  duration: 600   # Time for each tcpdump to run in seconds 
+  filepath: /tmp
+
+
+
 restartPolicy: OnFailure
 backoffLimit: 5
 
