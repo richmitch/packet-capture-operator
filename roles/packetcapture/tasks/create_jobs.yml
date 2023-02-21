@@ -27,6 +27,8 @@
             - name: tcpdump
               image: registry.redhat.io/rhel8/support-tools
               command: ["/bin/bash",  "/tmp/config/script.sh"]
+              securityContext:
+                privileged: true
               volumeMounts:
                 - mountPath: /tmp/config
                   name: tcpdump-script
