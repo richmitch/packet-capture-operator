@@ -6,3 +6,4 @@
   role: packetcapture
 #+kubebuilder:scaffold:watch
   snakeCaseParameters: false
+  reconcilePeriod: "30s"
