@@ -13,4 +13,5 @@ spec:
   jobId: qwer
   targetNamespace: openshift-gitops
   targetDeployment: openshift-gitops-server
-  duration: "30"
+  port: 443
+  completionTimestamp: "2023-02-17T02:48:04Z"

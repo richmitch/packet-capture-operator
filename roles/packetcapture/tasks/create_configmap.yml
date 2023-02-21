@@ -5,8 +5,6 @@
       api_version: v1
       kind: ConfigMap
       metadata:
-        annotations:
-          "ansible.sdk.operatorframework.io/verbosity": "4"
         labels:
           app.kubernetes.io/name: packet-capture
           app.kubernetes.io/instance: "{{ targetNamespace }}-{{ targetDeployment }}"
@@ -18,8 +16,8 @@
       data:
         namespace: "{{ targetNamespace }}"
         deployment: "{{ targetDeployment }}"
-        duration: "{{ duration }}"
-        port: "{{ port }}"
+        completionTimestamp: "{{ completionTimestamp }}"
+        port: "{{ port | string }}"
         script.sh: |
           NAME=${POD_NAME}
           NAMESPACE={{ targetNamespace }}

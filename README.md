@@ -28,7 +28,7 @@ spec:
   jobId: {{jobId}}
   targetNamespace: {{targetNamespace}}
   targetDeployment: {{targetDeployment}}
-  duration: {{duration}}
+  completionTimestamp: {{completionTimestamp}}
 ```
 Example
 ```yaml
@@ -47,7 +47,7 @@ spec:
   jobId: qwer
   targetNamespace: openshift-gitops
   targetDeployment: openshift-gitops-server
-  duration: "30"
+  completionTimestamp: "2023-02-17T02:48:04Z"
 ```
 
 The labels are key to the management of the objects that get created and the `app.kubernetes.io/instance` label value will be replicated through each of the created objects.  When the CR is later deleted, all objects that have been created with that label will also be deleted as part of the clean up.

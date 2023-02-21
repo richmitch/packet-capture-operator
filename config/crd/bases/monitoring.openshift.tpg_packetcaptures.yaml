@@ -30,10 +30,11 @@ spec:
           metadata:
             type: object
           spec:
+            type: object
             description: Spec defines the desired state of PacketCapture
             properties:
               jobId:
-                description: Unique id of the Packet Capture job
+                description: Unique id of the Packet Capture job (4 characters only)
                 type: string
               targetNamespace:
                 description: Namespace containing the Deployment that maintains the pods to be monitored
@@ -42,12 +43,18 @@ spec:
                 description: Deployment that maintains the pods to be monitored
                 type: string
               port:
-                description: The port to monitor
-                type: string              
-              duration:
-                description: Duration in seconds for the packet capture to run for
+                description: The TCP/IP port to perform the packet capture against
+                type: integer              
+              completionTimestamp:
+                description: complationTimestamp is a timestamp representing the server time when this packet capture should stop. Timing may not be exact and packet capture will cease soon after this time.  It is represented in RFC3339 form and is in UTC.
                 type: string
-            type: object
+            x-kubernetes-validations:
+              - rule: "self.port > 65535"
+                message: "port should be zero or a positive integer less than 65535"
+              - rule: "self.port < 0"
+                message: "port should be zero or a positive integer less than 65535"
+              - rule: "size(self.jobId) != 4"
+                message: "jobId must be a 4 character string"
             x-kubernetes-preserve-unknown-fields: true
           status:
             description: Status defines the observed state of PacketCapture
