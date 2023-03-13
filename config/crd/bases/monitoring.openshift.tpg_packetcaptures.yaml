@@ -48,13 +48,13 @@ spec:
               completionTimestamp:
                 description: complationTimestamp is a timestamp representing the server time when this packet capture should stop. Timing may not be exact and packet capture will cease soon after this time.  It is represented in RFC3339 form and is in UTC.
                 type: string
-            x-kubernetes-validations:
-              - rule: "self.port < 65535"
-                message: "port should be zero or a positive integer less than 65535"
-              - rule: "self.port > 0"
-                message: "port should be zero or a positive integer less than 65535"
-              - rule: "size(self.jobId) != 4"
-                message: "jobId must be a 4 character string"
+#            x-kubernetes-validations:
+#              - rule: "self.port < 65535"
+#                message: "port should be zero or a positive integer less than 65535"
+#              - rule: "self.port > 0"
+#                message: "port should be zero or a positive integer less than 65535"
+#              - rule: "size(self.jobId) != 4"
+#                message: "jobId must be a 4 character string"
             x-kubernetes-preserve-unknown-fields: true
           status:
             description: Status defines the observed state of PacketCapture
