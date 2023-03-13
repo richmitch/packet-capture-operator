@@ -10,6 +10,8 @@ metadata:
   name: packet-capture-scooby-shaggy
   namespace: packet-capture
 spec:
+  jobId: "zxcv"
   targetNamespace: scooby
   targetDeployment: shaggy
   duration: "30"
+  completionTimestamp: "2023-02-17T02:48:04Z"
