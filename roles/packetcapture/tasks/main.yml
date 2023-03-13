@@ -3,8 +3,8 @@
 - name: Configure PacketCapture
   ansible.builtin.include_tasks: "{{ tasks }}"
   loop:
-    - create_configmap.yml
     - discover_pods.yml
+    - create_configmap.yml
     - create_jobs.yml
   loop_control:
     loop_var: tasks

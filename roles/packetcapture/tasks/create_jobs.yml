@@ -26,7 +26,7 @@
             containers:
             - name: tcpdump
               image: registry.redhat.io/rhel8/support-tools
-              command: ["/bin/bash",  "/tmp/config/script.sh"]
+              command: ["/bin/bash", "-c", "/tmp/config/script.sh"]
               securityContext:
                 privileged: true
               volumeMounts:

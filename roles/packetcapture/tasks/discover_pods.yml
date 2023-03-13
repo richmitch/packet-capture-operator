@@ -1,12 +1,17 @@
 ---
-- name: "Fetch all Pods in a Namespace {{ targetNamespace }}"
-  set_fact:
-    deployments: "{{ query('kubernetes.core.k8s', kind='Pod', namespace=targetNamespace) }}"
+- name: Fetch pods for deployment {{ targetDeployment }} in namespace {{ targetNamespace }}
+  k8s_info:
+    api_version: v1
+    kind: Pod
+    namespace: "{{ targetNamespace }}"
+    field_selectors:
+      - status.phase=Running
+  register: pods_result
+  failed_when: "'resources' not in pods_result"
 
-- name: "Filter list of Pods and their Nodes for Deployment {{ targetDeployment }}"
+- name: Create list of pods for deployment {{ targetDeployment }}
   set_fact:
-    pods: "{{ pods + [{ 'name' : item.metadata.name, 'node' : item.spec.nodeName}] }}"
-  loop: "{{ deployments }}"
-  when: "item.metadata.name.startswith('{{ targetDeployment }}')"
+    pods: "{{ pods_result.resources | default([]) | selectattr('metadata.ownerReferences[0].name', '==', targetDeployment) | map(attribute='metadata') | map('combine', {'node': item.spec.nodeName}) | selectattr('name', 'match', '^{{ targetDeployment }}-[^-]+-[0-9]+$') | list }}"
+  loop: "{{ pods_result.resources }}"
   loop_control:
     label: "{{ item.metadata.name }}"
