@@ -39,8 +39,8 @@ spec:
               targetNamespace:
                 description: Namespace containing the Deployment that maintains the pods to be monitored
                 type: string
-              targetDeployment:
-                description: Deployment that maintains the pods to be monitored
+              targetApplication:
+                description: Application that maintains the pods to be monitored
                 type: string
               port:
                 description: The TCP/IP port to perform the packet capture against

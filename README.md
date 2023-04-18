@@ -18,16 +18,16 @@ kind: PacketCapture
 metadata:
   labels:
     app.kubernetes.io/name: packet-capture
-    app.kubernetes.io/instance: packet-capture-{{targetNamespace}}-{{targetDeployment}}
+    app.kubernetes.io/instance: packet-capture-{{targetNamespace}}-{{targetApplication}}
     app.kubernetes.io/part-of: packet-capture-operator
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: packet-capture-operator
-  name: packet-capture-{{targetNamespace}}-{{targetDeployment}}
+  name: packet-capture-{{targetNamespace}}-{{targetApplication}}
   namespace: packet-capture
 spec:
   jobId: {{jobId}}
   targetNamespace: {{targetNamespace}}
-  targetDeployment: {{targetDeployment}}
+  targetApplication: {{targetApplication}}
   completionTimestamp: {{completionTimestamp}}
 ```
 Example
@@ -46,7 +46,7 @@ metadata:
 spec:
   jobId: qwer
   targetNamespace: openshift-gitops
-  targetDeployment: openshift-gitops-server
+  targetApplication: openshift-gitops-server
   completionTimestamp: "2023-02-17T02:48:04Z"
 ```
 
@@ -55,12 +55,12 @@ The labels are key to the management of the objects that get created and the `ap
 | --- | --- | --- |
 | spec.jobId | String | 4 character string that is used to make the Job names umnique if the same target Pods are monitored on more that one occasion.
 | spec.targetNamespace | String | The Namespace where the target Pods are running
-| spec.targetDeployment | String | The Deployment that manages the Pods
+| spec.targetApplication | String | The Deployment that manages the Pods
 | spec.duration | String | The number of seconds for the monitoring to run
 
 When a PacketCapture CR is created the operator will call the ansible role and that will create the following:
 
 | Kind | Name | Quantity | Description |
 | --- | --- | :---: | --- |
-| ConfigMap | {{targetNamespace}}-{{targetDeployment}} | 1 | The ConfigMap for this particular packet capture execution
+| ConfigMap | {{targetNamespace}}-{{targetApplication}} | 1 | The ConfigMap for this particular packet capture execution
 | Job | {{podName}}-{{jobId}} | One per Pod | A Job that will start the privileged container to perform the tcpdump

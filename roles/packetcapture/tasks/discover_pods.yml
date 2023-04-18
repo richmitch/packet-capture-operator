@@ -1,5 +1,5 @@
 ---
-- name: Fetch pods for deployment {{ targetDeployment }} in namespace {{ targetNamespace }}
+- name: Fetch pods for deployment {{ targetApplication }} in namespace {{ targetNamespace }}
   k8s_info:
     api_version: v1
     kind: Pod
@@ -9,9 +9,9 @@
   register: pods_result
   failed_when: "'resources' not in pods_result"
 
-- name: Create list of pods for deployment {{ targetDeployment }}
+- name: Create list of pods for deployment {{ targetApplication }}
   set_fact:
-    pods: "{{ pods_result.resources | default([]) | selectattr('metadata.ownerReferences[0].name', '==', targetDeployment) | map(attribute='metadata') | map('combine', {'node': item.spec.nodeName}) | selectattr('name', 'match', '^{{ targetDeployment }}-[^-]+-[0-9]+$') | list }}"
+    pods: "{{ pods_result.resources | default([]) | selectattr('metadata.ownerReferences.name', '==', targetApplication) | map(attribute='metadata') | map('combine', {'node': item.spec.nodeName}) | selectattr('name', 'match', '^{{ targetApplication }}-[^-]+-[0-9]+$') | list }}"
   loop: "{{ pods_result.resources }}"
   loop_control:
     label: "{{ item.metadata.name }}"

@@ -12,6 +12,6 @@ metadata:
 spec:
   jobId: "qwer"
   targetNamespace: scooby
-  targetDeployment: shaggy
+  targetApplication: shaggy
   port: 443
   completionTimestamp: "2023-02-17T02:48:04Z"

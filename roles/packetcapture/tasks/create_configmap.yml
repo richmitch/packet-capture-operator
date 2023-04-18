@@ -1,5 +1,5 @@
 ---
-- name: "Create ConfigMap packet-capture-{{ targetNamespace }}-{{ targetDeployment }}"
+- name: "Create ConfigMap packet-capture-{{ targetNamespace }}-{{ targetApplication }}"
   kubernetes.core.k8s:
     definition:
       api_version: v1
@@ -7,15 +7,15 @@
       metadata:
         labels:
           app.kubernetes.io/name: packet-capture
-          app.kubernetes.io/instance: "{{ targetNamespace }}-{{ targetDeployment }}"
+          app.kubernetes.io/instance: "{{ targetNamespace }}-{{ targetApplication }}"
           app.kubernetes.io/part-of: packet-capture-operator
           app.kubernetes.io/managed-by: kustomize
           app.kubernetes.io/created-by: packet-capture-operator
-        name: "{{ targetNamespace }}-{{ targetDeployment }}"
+        name: "{{ targetNamespace }}-{{ targetApplication }}"
         namespace: "{{ packetCaptureNamespace }}"
       data:
         namespace: "{{ targetNamespace }}"
-        deployment: "{{ targetDeployment }}"
+        deployment: "{{ targetApplication }}"
         completionTimestamp: "{{ completionTimestamp }}"
         port: "{{ port | string }}"
         script.sh: |
@@ -26,6 +26,6 @@
           NSENTER_PARAMETERS="--net=${NS_PATH}"
           INTERFACE={{ interface | default(tcpdump.interface) }}
           TCPDUMP_EXTRA_PARAMS="-G {{ tcpdump.duration }}"
-          nsenter $nsenter_parameters -- tcpdump -nn -i ${INTERFACE} -w {{ tcpdump.filepath }}/{{ targetNamespace }}/{{ targetDeployment }}/${POD_NAME}_$(date +\%d_%m_%Y-%H_%M_%S-%Z).pcap ${TCPDUMP_EXTRA_PARAMS}
+          nsenter $nsenter_parameters -- tcpdump -nn -i ${INTERFACE} -w {{ tcpdump.filepath }}/{{ targetNamespace }}/{{ targetApplication }}/${POD_NAME}_$(date +\%d_%m_%Y-%H_%M_%S-%Z).pcap ${TCPDUMP_EXTRA_PARAMS}
     state: "{{ state }}"
   ignore_errors: true
