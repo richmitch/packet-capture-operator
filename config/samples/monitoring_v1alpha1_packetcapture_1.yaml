@@ -11,7 +11,7 @@ metadata:
   namespace: packet-capture
 spec:
   jobId: "qwer"
-  targetNamespace: openshift-gitops
-  targetApplication: openshift-gitops-server
+  namespace: openshift-gitops
+  application: openshift-gitops-server
   port: 443
   completionTimestamp: "2023-02-17T02:48:04Z"

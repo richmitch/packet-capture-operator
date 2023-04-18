@@ -7,8 +7,9 @@
     - ioperator_sdk.util
   vars:
     jobId: "{{ lookup('community.general.random_string', length=4, numbers=false, special=false, upper=false) }}"
-    targetNamespace: openshift-insights
-    targetApplication: insights-operator
+    namespace: openshift-insights
+    application: insights-operator
+    kind: Deployment
     port: 3000
     completionTimestamp: "2023-02-17T02:48:04Z"
   roles:

@@ -36,12 +36,22 @@ spec:
               jobId:
                 description: Unique id of the Packet Capture job (4 characters only)
                 type: string
-              targetNamespace:
-                description: Namespace containing the Application that maintains the pods to be monitored
-                type: string
-              targetApplication:
+              application:
                 description: Application that maintains the pods to be monitored
-                type: string
+                type: object
+                properties:
+                  apiVersion:
+                    description: apiVersion of the target application
+                    type: string
+                  kind:
+                    description: The kind of the target aplication
+                    type: string
+                  name:
+                    description: The name of the target aplication
+                    type: string
+                  namespace:
+                    description: Namespace containing the Application that maintains the pods to be monitored
+                    type: string
               port:
                 description: The TCP/IP port to perform the packet capture against
                 type: integer              

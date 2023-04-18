@@ -11,7 +11,7 @@ metadata:
   namespace: packet-capture
 spec:
   jobId: "qwer"
-  targetNamespace: scooby
-  targetApplication: shaggy
+  namespace: scooby
+  application: shaggy
   port: 443
   completionTimestamp: "2023-02-17T02:48:04Z"
