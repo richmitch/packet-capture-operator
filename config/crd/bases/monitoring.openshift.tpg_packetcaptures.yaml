@@ -37,7 +37,7 @@ spec:
                 description: Unique id of the Packet Capture job (4 characters only)
                 type: string
               targetNamespace:
-                description: Namespace containing the Deployment that maintains the pods to be monitored
+                description: Namespace containing the Application that maintains the pods to be monitored
                 type: string
               targetApplication:
                 description: Application that maintains the pods to be monitored

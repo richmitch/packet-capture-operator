@@ -3,7 +3,7 @@
 # Caution
 Note that this is a Work In Progress and not a complete solution.  The current capabilities does the following:
 - Create the PacketCapture operator and PacketCaptures CRD
-- When a PacketCapture CR is created the operator creates a ConfigMap and a job per Pod found for the Namespace / Deployment
+- When a PacketCapture CR is created the operator creates a ConfigMap and a job per Pod found for the Namespace / Application
 - Cleans up when the PacketCapture CR is deleted
 
 The properties of the CRD and the objects that get created are likely to change as the solution develops.
@@ -55,7 +55,7 @@ The labels are key to the management of the objects that get created and the `ap
 | --- | --- | --- |
 | spec.jobId | String | 4 character string that is used to make the Job names umnique if the same target Pods are monitored on more that one occasion.
 | spec.targetNamespace | String | The Namespace where the target Pods are running
-| spec.targetApplication | String | The Deployment that manages the Pods
+| spec.targetApplication | String | The Application that manages the Pods
 | spec.duration | String | The number of seconds for the monitoring to run
 
 When a PacketCapture CR is created the operator will call the ansible role and that will create the following:
