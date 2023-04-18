@@ -11,7 +11,7 @@
 
 - name: Identify list of pods for {{ application.kind }} {{ application.name }}
   set_fact:
-    pods: "{{ pods_result.resources | default([]) | selectattr('metadata.ownerReferences[0].name', '==', application.name) | map(attribute='metadata') | map('combine', {'node': item.spec.nodeName}) | selectattr('name', 'match', '^{{ application.name }}-[^-]+-[0-9]+$') | list }}"
+    pods: "{{ pods | default([]) | selectattr('metadata.ownerReferences[0].name', '==', application.name) | map(attribute='metadata') | map('combine', {'node': item.spec.nodeName}) | selectattr('name', 'match', '^{{ application.name }}-[^-]+-[0-9]+$') | list }}"
   loop: "{{ pods_result.resources }}"
   loop_control:
     label: "{{ item.metadata.name }}"

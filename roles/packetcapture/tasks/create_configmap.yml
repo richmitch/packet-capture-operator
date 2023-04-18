@@ -1,5 +1,5 @@
 ---
-- name: "Create ConfigMap packet-capture-{{ namespace }}-{{ application }}"
+- name: "Create ConfigMap packet-capture-{{ application.namespace }}-{{ application.name }}"
   kubernetes.core.k8s:
     definition:
       api_version: v1
@@ -7,25 +7,27 @@
       metadata:
         labels:
           app.kubernetes.io/name: packet-capture
-          app.kubernetes.io/instance: "{{ namespace }}-{{ application }}"
+          app.kubernetes.io/instance: "{{ application.namespace }}-{{ application.name }}"
           app.kubernetes.io/part-of: packet-capture-operator
           app.kubernetes.io/managed-by: kustomize
           app.kubernetes.io/created-by: packet-capture-operator
-        name: "{{ namespace }}-{{ application }}"
+        name: "{{ application.namespace }}-{{ application.name }}"
         namespace: "{{ packetCaptureNamespace }}"
       data:
-        namespace: "{{ namespace }}"
-        deployment: "{{ application }}"
+        apiVersion: "{{ application.apiVersion }}"
+        kind: "{{ application.kind }}"
+        namespace: "{{ application.namespace }}"
+        name: "{{ application.name }}"
         completionTimestamp: "{{ completionTimestamp }}"
         port: "{{ port | string }}"
         script.sh: |
           NAME=${POD_NAME}
-          NAMESPACE={{ namespace }}
+          NAMESPACE={{ application.namespace }}
           POD_ID=$(chroot /host crictl pods --namespace ${NAMESPACE} --name ${NAME} -q)
           NS_PATH="/host/$(chroot /host bash -c "crictl inspectp $POD_ID | jq '.info.runtimeSpec.linux.namespaces[]|select(.type==\"network\").path' -r")"
           NSENTER_PARAMETERS="--net=${NS_PATH}"
           INTERFACE={{ interface | default(tcpdump.interface) }}
           TCPDUMP_EXTRA_PARAMS="-G {{ tcpdump.duration }}"
-          nsenter $nsenter_parameters -- tcpdump -nn -i ${INTERFACE} -w {{ tcpdump.filepath }}/{{ namespace }}/{{ application }}/${POD_NAME}_$(date +\%d_%m_%Y-%H_%M_%S-%Z).pcap ${TCPDUMP_EXTRA_PARAMS}
+          nsenter $nsenter_parameters -- tcpdump -nn -i ${INTERFACE} -w {{ tcpdump.filepath }}/{{ application.namespace }}/{{ application.name }}/${POD_NAME}_$(date +\%d_%m_%Y-%H_%M_%S-%Z).pcap ${TCPDUMP_EXTRA_PARAMS}
     state: "{{ state }}"
   ignore_errors: true

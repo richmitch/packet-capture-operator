@@ -3,7 +3,7 @@
 - name: Configure PacketCapture
   ansible.builtin.include_tasks: "{{ tasks }}"
   loop:
-    - discover_pods.yml
+    - "{{ 'discover_deployment_pods.yml' if (application.kind == 'Deployment') else 'discover_pods.yml'}}"
     - create_configmap.yml
     - create_jobs.yml
   loop_control:
